@@ -1,4 +1,4 @@
-package com.cg.basic;
+package com.cg.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Game {
 	
 	//fields
-	String[] defaultBoard = {"0","1","2","3","4","5","6","7","8","9"};
+	
 	String[] board = {"0","1","2","3","4","5","6","7","8","9"};
 	
 	int player1Points = 0;
@@ -16,7 +16,7 @@ public class Game {
 	int position = 0;
 	
 	List<Integer> list = new ArrayList<>();
-	List<Integer> emptyList = new ArrayList<>();
+	
 	
 	Scanner input = new Scanner (System.in);
 	
@@ -31,6 +31,7 @@ public class Game {
 	}
 	
 	public void clearTable() {
+		String[] defaultBoard = {"0","1","2","3","4","5","6","7","8","9"};
 		board = defaultBoard;
 	}
 	
@@ -205,21 +206,30 @@ public class Game {
 		infoScreen();
 		while(outer) {
 			while(inner) {
+				
 				table();
 				player1Input();
 				inner = winLogic();
+				
+				if(list.size() == 10) {
+					inner = false;
+					System.out.println("Nobody won!!!");
+				}
+				
 				if(inner == true) {
 					table();
 					player2Input();
 					inner = winLogic();
 				}
+				
 			}
 			clearTable();
 			playerPoints();
 			outer = stopGame();
 			inner = outer;
-			list = emptyList;
-			list.add(0);
+			List<Integer> emptyList = new ArrayList<>();
+			this.list = emptyList;
+			this.list.add(0);
 		}
 		
 		finalScreen();
